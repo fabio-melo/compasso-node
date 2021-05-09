@@ -1,13 +1,13 @@
-import { DATABASE_URI } from '@/config';
+import { DATABASE_URI, DATABASE_NAME } from '@/config';
 import { MongoClient, Collection } from 'mongodb'
 
 export class MongoConnector{
-  private readonly uri: string;
+  private readonly uri: string = DATABASE_URI;
+  private readonly db: string = DATABASE_NAME;
   private client;
 
   constructor(){
-    this.uri = DATABASE_URI;
-    this.client = new MongoClient(DATABASE_URI);
+    this.client = new MongoClient(DATABASE_URI,  { useUnifiedTopology: true });
     // todo: error checking
   }
   
@@ -16,10 +16,11 @@ export class MongoConnector{
   }
   async close(): Promise<void>{
     await this.client.close()
-    ;(await this.collection("a")).find()
   }
+  
   async collection(name: string): Promise<Collection>{
-    return this.client.db().collection(name)
+    const db = this.client.db(DATABASE_NAME);
+    return db.collection(name);
     
   }
 

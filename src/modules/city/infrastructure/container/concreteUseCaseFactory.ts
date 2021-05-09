@@ -5,7 +5,9 @@ import { CityRepositoryImpl } from "../repositories/CityRepositoryImpl";
 
 
 export function concreteUseCaseFactory(req: express.Request, res: express.Response, useCaseClass: any): any{
+
   const controller = new GenericController(req,res);
+  
   const database = new MongoConnector();
   const repo = new CityRepositoryImpl(database);
   

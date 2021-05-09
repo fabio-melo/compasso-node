@@ -12,15 +12,20 @@ export class CityRepositoryImpl implements CityRepository{
   }
 
   async checkIfCityAlreadyExists(name: string, state: string): Promise<boolean> {
+    await this.database.connect()
     const cityQuery = { name, state}
-    const result = await this.database.collection("cities").find(cityQuery).toArray()
+    const result = await (await this.database.collection("cities")).find(cityQuery).toArray()
+    console.log("result", result.length > 0)
+    // await this.database.close()
     return (result.length > 0);
   }
 
   async saveCity(city: City): Promise<boolean>{
+    await this.database.connect()
     let cityPersistence = CityMap.toPersistence(city);
-    await this.database.connect();
     const result =  await (await this.database.collection("cities")).insertOne(cityPersistence);
+    await this.database.close()
+
     if(result.insertedCount === 1){
       return true;
     }
@@ -35,6 +40,8 @@ export class CityRepositoryImpl implements CityRepository{
     await this.database.connect();
     const result =  await (await this.database.collection("cities")).find(query).toArray();
 
+    await this.database.close()
+
     return result;
     
     }
@@ -44,7 +51,8 @@ export class CityRepositoryImpl implements CityRepository{
     const query = { state }
     await this.database.connect();
     const result =  await (await this.database.collection("cities")).find(query).toArray();
-    
+    await this.database.close()
+
     return result;
   }
 

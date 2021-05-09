@@ -34,9 +34,10 @@ export class CreateCityUseCase implements UseCase{
       }
 
       // testar se a cidade existe
-      if(this.cityRepo.checkIfCityAlreadyExists(cityData.name, cityData.state)){
+      if(await this.cityRepo.checkIfCityAlreadyExists(cityData.name, cityData.state)){
         return this.cityController.fail('cidade já está cadastrada');
       }
+      console.log("salvarr")
 
       await this.cityRepo.saveCity(city);
 
@@ -44,7 +45,7 @@ export class CreateCityUseCase implements UseCase{
 
 
     } catch (err) {
-      console.log(err);
+      console.log(err)
       return this.cityController.fail("erro inesperado");
     }
   }

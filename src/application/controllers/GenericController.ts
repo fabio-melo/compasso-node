@@ -16,7 +16,7 @@ export class GenericController {
     return this.req.params
   }
   public getQuery(){
-    this.req.query;
+    return this.req.query;
   }
 
   public  jsonResponse (
@@ -71,7 +71,6 @@ export class GenericController {
   }
 
   public fail (error: Error | string) {
-    console.log(error);
     return this.res.status(500).json({
       message: error.toString()
     })

@@ -23,8 +23,9 @@ export class FindCityByNameUseCase implements UseCase{
   public async execute (): Promise<any> {
     
     try {
-      const cityData = this.cityController.getData() as FindCityByNameDTO;
-
+      const cityData = this.cityController.getQuery() as unknown as FindCityByNameDTO;
+      console.log("params", cityData)
+      
       const results = await this.cityRepo.findByName(cityData.name);
             
       return this.cityController.ok(results);

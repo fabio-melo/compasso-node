@@ -23,7 +23,7 @@ export class FindCityByStateUseCase implements UseCase{
   public async execute (): Promise<any> {
     
     try {
-      const cityData = this.cityController.getData() as FindCityByStateDTO;
+      const cityData = this.cityController.getQuery() as unknown as FindCityByStateDTO;
 
       const results = await this.cityRepo.findByState(cityData.state);
             
