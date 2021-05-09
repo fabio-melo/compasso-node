@@ -35,14 +35,15 @@ export class CityRepositoryImpl implements CityRepository{
   }
   async findByName(name: string): Promise<any[]>{
 
-
+    console.log("name", name)
     const query = { name }
     await this.database.connect();
-    const result =  await (await this.database.collection("cities")).find(query).toArray();
+    const result =  await (await this.database.collection("cities")).find(query)
+    const resultArray = await result.toArray();
+    console.log("aa", resultArray)
+    
 
-    await this.database.close()
-
-    return result;
+    return resultArray;
     
     }
   

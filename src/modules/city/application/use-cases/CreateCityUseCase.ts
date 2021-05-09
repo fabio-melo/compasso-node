@@ -37,7 +37,6 @@ export class CreateCityUseCase implements UseCase{
       if(await this.cityRepo.checkIfCityAlreadyExists(cityData.name, cityData.state)){
         return this.cityController.fail('cidade já está cadastrada');
       }
-      console.log("salvarr")
 
       await this.cityRepo.saveCity(city);
 

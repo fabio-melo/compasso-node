@@ -27,7 +27,6 @@ export class FindCityByNameUseCase implements UseCase{
       console.log("params", cityData)
       
       const results = await this.cityRepo.findByName(cityData.name);
-            
       return this.cityController.ok(results);
 
     } catch (err) {

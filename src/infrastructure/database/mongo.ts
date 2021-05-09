@@ -1,6 +1,8 @@
 import { DATABASE_URI, DATABASE_NAME } from '@/config';
 import { MongoClient, Collection } from 'mongodb'
 
+console.log("DATA", DATABASE_NAME);
+
 export class MongoConnector{
   private readonly uri: string = DATABASE_URI;
   private readonly db: string = DATABASE_NAME;
