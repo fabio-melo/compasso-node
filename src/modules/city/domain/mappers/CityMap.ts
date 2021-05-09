@@ -1,5 +1,5 @@
-import { Mapper } from "@/shared/models/mappers/Mapper";
-import { City } from "../domain/City";
+import { Mapper } from "@/shared/models/domain/Mapper";
+import { City } from "../entities/City";
 
 
 export interface CityProps {
@@ -7,7 +7,7 @@ export interface CityProps {
   state: string,
 }
 
-export class CityMapper implements Mapper<City>{
+export class CityMap implements Mapper<City>{
   static toEntity(raw: CityProps) {
     let city = raw.name;
     let state = raw.state;
@@ -20,6 +20,5 @@ export class CityMapper implements Mapper<City>{
       state: city.state.value.toString(),
     };
   }
-  // toPersistenc
     
 }
