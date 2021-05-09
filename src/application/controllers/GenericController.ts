@@ -3,17 +3,21 @@ import express from "express"
 export class GenericController {
   private req: express.Request;
   private res: express.Response;
-  private readonly data: object;
 
   constructor(req: express.Request, res: express.Response) {
     this.req = req;
     this.res = res;
-    this.data = req.body;
   }
 
   public getData(){
-    return this.data;
+    return this.req.body;
   };
+  public getParams(){
+    return this.req.params
+  }
+  public getQuery(){
+    this.req.query;
+  }
 
   public  jsonResponse (
     code: number, message: string

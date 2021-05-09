@@ -16,9 +16,11 @@ export class MongoConnector{
   }
   async close(): Promise<void>{
     await this.client.close()
+    ;(await this.collection("a")).find()
   }
   async collection(name: string): Promise<Collection>{
     return this.client.db().collection(name)
+    
   }
 
 }
