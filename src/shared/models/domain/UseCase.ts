@@ -5,6 +5,11 @@ export abstract class UseCase{
   * @abstract
   */
   
-  abstract execute(raw: any): any ;
+  // abstract execute(raw: any): any ;
 
 }
+
+
+// export interface UseCase<IRequest, IResponse> {
+//   execute (request?: IRequest) : Promise<IResponse> | IResponse;
+// }
