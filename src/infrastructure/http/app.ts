@@ -27,6 +27,7 @@ app.use(compression())
 app.use(helmet())
 app.use(morgan('combined'))
 
+
 app.use('/api/v1', v1Router)
 
 // New api versions can go here
