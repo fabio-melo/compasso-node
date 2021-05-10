@@ -8,8 +8,6 @@ const v1Router = express.Router();
 v1Router.use('/cities', cityRouter )
 v1Router.use('/customers', customerRouter )
 
-
-
 v1Router.use('/docs', swaggerUi.serve,
             swaggerUi.setup(swaggerData));
 
