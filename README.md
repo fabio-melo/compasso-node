@@ -17,10 +17,10 @@ yarn run-prod
 ```
 
 --------------------
+
 ## Documentação
 
 Um servidor swagger pode ser encontrado em http://localhost:3000/api/v1/docs, além disso, um arquivo de testes do postman está incluido na raiz do repositório.
------------------
 
 
 ## Suposições e Detalhes da Implementação
