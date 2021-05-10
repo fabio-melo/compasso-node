@@ -1,4 +1,4 @@
-import { GenericController } from "@/application/controllers/GenericController";
+import { GenericController } from "@/shared/application/controllers/GenericController";
 import { InvalidParameterError } from "@/shared/errors/InvalidParameterError";
 import { UseCase } from "@/shared/models/domain/UseCase";
 import { CityMap } from "../../domain/mappers/CityMap";

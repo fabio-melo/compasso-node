@@ -1,4 +1,4 @@
-import { GenericController } from "@/application/controllers/GenericController";
+import { GenericController } from "@/shared/application/controllers/GenericController";
 import MongoConnector from "@/infrastructure/database";
 import express from "express";
 import { CityRepositoryImpl } from "../repositories/CityRepositoryImpl";

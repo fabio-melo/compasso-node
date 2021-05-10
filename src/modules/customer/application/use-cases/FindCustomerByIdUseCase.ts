@@ -1,4 +1,4 @@
-import { GenericController } from "@/application/controllers/GenericController";
+import { GenericController } from "@/shared/application/controllers/GenericController";
 import { UseCase } from "@/shared/models/domain/UseCase";
 import { CustomerRepository } from "../../domain/repositories/CustomerRepository";
 
