@@ -1,10 +1,6 @@
 import { Mapper } from "@/shared/models/domain/Mapper";
-import { Customer } from "../entities/Customer";
+import { Customer, ICustomer } from "../entities/Customer";
 
-
-export interface ICustomer{
-  _id: string, name: string, birthdate: string, cityOfResidence: string
-}
 
 export class CustomerMap implements Mapper<Customer>{
   static toEntity(raw: ICustomer) {

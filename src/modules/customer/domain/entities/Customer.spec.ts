@@ -1,54 +1,28 @@
-// import { InvalidParameterError } from "@/shared/errors/InvalidParameterError";
-// import { expect } from "chai";
-// import { City } from "./Customer"
-// import { CityName } from "./CustomerName"
+import { InvalidParameterError } from "@/shared/errors/InvalidParameterError";
+import { expect } from "chai";
 
-// describe('Criar entidade City', () => {
-//   it('deve retornar uma nova cidade criada', async () => {
-//     const cityToAdd = {
-//       name: "João Pessoa",
-//       state: "Paraíba"
-//     }
+import { Customer, ICustomer } from "./Customer"
+
+describe('Criar entidade Customer', () => {
+  it('deve retornar uma nova entidade', async () => {
     
-//     const city = City.create(cityToAdd);
-
-//     expect(city).to.be.an.instanceOf(City)
+    const customerToAdd: ICustomer = {
+      _id: null,
+      name: "Fábio Melo",
+      birthdate: "1990-02-03",
+      cityOfResidence: {
+        name: "João Pessoa",
+        state: "PB"
+      },
+      gender: "Male",
+    }
     
-//     // expect(city).to.be
-//   })
+    const customer = Customer.create(customerToAdd);
 
-// });
-
-
-// describe('Criar entidade City com nome vazio', () => {
-//   it('deve retornar InvalidParameterError', async () => {
-//     const cityToAdd = {
-//       name: "",
-//       state: "Paraíba"
-//     }
+    expect(customer).to.be.an.instanceOf(Customer)
     
-//     const city = City.create(cityToAdd);
+    // expect(city).to.be
+  })
 
-//     expect(city).to.be.an.instanceOf(InvalidParameterError)
-    
-//     // expect(city).to.be
-//   })
+});
 
-// });
-
-
-// describe('Criar entidade City com estado vazio', () => {
-//   it('deve retornar InvalidParameterError', async () => {
-//     const cityToAdd = {
-//       name: "João Pessoa",
-//       state: ""
-//     }
-    
-//     const city = City.create(cityToAdd);
-
-//     expect(city).to.be.an.instanceOf(InvalidParameterError)
-    
-//     // expect(city).to.be
-//   })
-
-// });

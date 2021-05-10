@@ -5,8 +5,15 @@ import { CustomerGender } from "./CustomerGender";
 import { CustomerBirthDate } from "./CustomerBirthDate";
 import { CustomerCityOfResidence } from "./CustomerCityOfResidence";
 
-interface ICustomer{
-  _id: string, name: string, birthdate: string, cityOfResidence: string, gender: string
+export interface ICustomer {
+  _id: any, // null ou string 
+  name: string, 
+  birthdate: string, 
+  cityOfResidence: {
+    name: string,
+    state: string,
+  }, 
+  gender: string
 }
 
 export class Customer implements Entity<Customer> {
@@ -28,25 +35,25 @@ export class Customer implements Entity<Customer> {
 
   // não verifico o ID;
 
-  public static create(customer: ICustomer){
+  public static create(customer: ICustomer) {
     const _id = customer._id;
 
     const nameOrError = CustomerName.create(customer.name);
-    if(nameOrError instanceof InvalidParameterError){
+    if (nameOrError instanceof InvalidParameterError) {
       return new InvalidParameterError("name");
     }
 
-    const genderOrError = CustomerName.create(customer.gender);
-    if(genderOrError instanceof InvalidParameterError){
+    const genderOrError = CustomerGender.create(customer.gender);
+    if (genderOrError instanceof InvalidParameterError) {
       return new InvalidParameterError("gender");
     }
-    const birthdateOrError = CustomerName.create(customer.birthdate);
-    if(birthdateOrError instanceof InvalidParameterError){
+    const birthdateOrError = CustomerBirthDate.create(customer.birthdate);
+    if (birthdateOrError instanceof InvalidParameterError) {
       return new InvalidParameterError("birthdate");
     }
-    
-    const cityOfResidenceOrError = CustomerName.create(customer.cityOfResidence);
-    if(cityOfResidenceOrError instanceof InvalidParameterError){
+
+    const cityOfResidenceOrError = CustomerCityOfResidence.create(customer.cityOfResidence);
+    if (cityOfResidenceOrError instanceof InvalidParameterError) {
       return new InvalidParameterError("cityOfResidence");
     }
 
@@ -55,7 +62,7 @@ export class Customer implements Entity<Customer> {
 
   }
 
-  get age(){
+  get age() {
     // definir utils - return age.
     return "22"
   }
