@@ -4,9 +4,10 @@ import { CustomerName } from "./CustomerName";
 import { CustomerGender } from "./CustomerGender";
 import { CustomerBirthDate } from "./CustomerBirthDate";
 import { CustomerCityOfResidence } from "./CustomerCityOfResidence";
+import { UniqueID } from "@/shared/models/domain/UniqueID";
 
 export interface ICustomer {
-  _id: any, // null ou string 
+  id_: any, // null ou string 
   name: string, 
   birthdate: string, 
   cityOfResidence: {
@@ -18,15 +19,15 @@ export interface ICustomer {
 
 export class Customer implements Entity<Customer> {
 
-  public readonly _id: string;
+  public readonly id_: UniqueID;
   public readonly name: CustomerName //CustomerName;
   public readonly birthdate: CustomerBirthDate //CustomerBirthDate;
   public readonly cityOfResidence: CustomerCityOfResidence;
   public readonly gender: CustomerGender;
 
 
-  private constructor(_id: string, name: CustomerName, gender: CustomerGender, birthdate: CustomerBirthDate, cityOfResidence: CustomerCityOfResidence) {
-    this._id = _id
+  private constructor(id_: UniqueID, name: CustomerName, gender: CustomerGender, birthdate: CustomerBirthDate, cityOfResidence: CustomerCityOfResidence) {
+    this.id_ = id_
     this.name = name
     this.gender = gender
     this.birthdate = birthdate
@@ -36,7 +37,12 @@ export class Customer implements Entity<Customer> {
   // não verifico o ID;
 
   public static create(customer: ICustomer) {
-    const _id = customer._id;
+
+    const idOrError = UniqueID.create(customer.id_);
+    if (idOrError instanceof InvalidParameterError){
+      console.log("erro no id")
+      return new InvalidParameterError("id")
+    }
 
     const nameOrError = CustomerName.create(customer.name);
     if (nameOrError instanceof InvalidParameterError) {
@@ -58,7 +64,7 @@ export class Customer implements Entity<Customer> {
     }
 
 
-    return new Customer(_id, nameOrError, genderOrError, birthdateOrError, cityOfResidenceOrError);
+    return new Customer(idOrError, nameOrError, genderOrError, birthdateOrError, cityOfResidenceOrError);
 
   }
 

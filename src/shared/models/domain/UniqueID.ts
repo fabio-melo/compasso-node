@@ -9,18 +9,13 @@ export class UniqueID extends ValueObject<string>{
     super(id_)
   }
 
-  public create(id_: string | null): UniqueID | InvalidParameterError{
+  static create(id_: string | null): UniqueID | InvalidParameterError{
     if(id_ == null){
       let id = generateID();
       return new UniqueID(id);
     }
     if(uuidValidateV4(id_)){
-      let newID = generateID()
-      return new UniqueID(newID)
-    }
-    if(uuidValidateV4(id_)){
-      let newID = generateID()
-      return new UniqueID(newID)
+      return new UniqueID(id_)
     }
     return new InvalidParameterError("uuid inválido")
   }

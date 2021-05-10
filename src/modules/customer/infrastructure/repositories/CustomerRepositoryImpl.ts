@@ -39,20 +39,21 @@ export class CustomerRepositoryImpl implements CustomerRepository{
     
   }
 
-  async findById(_id: string): Promise<any>{
+  async findById(id_: string): Promise<any>{
 
-    const query = { _id }
+    const query = { id_ }
+    console.log("query", query)
     await this.database.connect();
     const result =  await (await this.customerCollection()).findOne(query)
-      
+    console.log("RESULT", result)
   
     return result;
       
     }
 
-  async deleteCustomer(_id: string): Promise<boolean>{
+  async deleteCustomer(id_: string): Promise<boolean>{
 
-    const query = { _id }
+    const query = { id_ }
     await this.database.connect();
     const result =  await (await this.customerCollection()).deleteOne(query)
     console.log("del", result)
@@ -66,9 +67,9 @@ export class CustomerRepositoryImpl implements CustomerRepository{
     }
 
   
-  async updateCustomerName(_id: string, name: string): Promise<boolean> {
+  async updateCustomerName(id_: string, name: string): Promise<boolean> {
 
-    const query = { _id }
+    const query = { id_ }
     const data = { name }
     await this.database.connect();
     const result =  await (await this.customerCollection()).updateOne(query, {$set: name})

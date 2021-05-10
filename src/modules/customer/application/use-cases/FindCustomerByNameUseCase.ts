@@ -24,7 +24,7 @@ export class FindCustomerByNameUseCase implements UseCase{
   public async execute (): Promise<any> {
     
     try {
-      const {name} = this.CustomerController.getData() as unknown as FindCustomerByNameDTO;
+      const {name} = this.CustomerController.getQuery() as unknown as FindCustomerByNameDTO;
       
       let customer = await this.CustomerRepo.findByName(name);
 

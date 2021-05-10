@@ -21,9 +21,9 @@ export class UpdateCustomerUseCase implements UseCase{
     
     try {
       const { name } = this.CustomerController.getData();
-      const { _id } = this.CustomerController.getParams();
+      const { id_ } = this.CustomerController.getParams();
 
-      let customer = await this.CustomerRepo.findById(_id);
+      let customer = await this.CustomerRepo.findById(id_);
       
       if(customer == null){
         return this.CustomerController.notFound("cliente não encontrado");
@@ -35,7 +35,7 @@ export class UpdateCustomerUseCase implements UseCase{
         return this.CustomerController.fail('nome inválido');
       }
 
-      const results = await this.CustomerRepo.updateCustomerName(_id, name)
+      const results = await this.CustomerRepo.updateCustomerName(id_, name)
 
       if(results){
         return this.CustomerController.ok(customer);

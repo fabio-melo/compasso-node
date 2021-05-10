@@ -6,7 +6,7 @@ import { CustomerRepository } from "../../domain/repositories/CustomerRepository
 
 
 interface CreateCustomerDTO {
-  _id: any, // null ou string 
+  id_: any, // null ou string 
   name: string, 
   birthdate: string, 
   cityOfResidence: {
@@ -32,9 +32,16 @@ export class CreateCustomerUseCase implements UseCase{
   public async execute (): Promise<any> {
     
     try {
-      const CustomerData = this.CustomerController.getData() as CreateCustomerDTO;
+      const customerData = this.CustomerController.getData() as CreateCustomerDTO;
 
-      const Customer = CustomerMap.toEntity(CustomerData);
+      const Customer = CustomerMap.toEntity(customerData);
+      if(customerData.id_ != null){
+        const checkExistence = await this.CustomerRepo.findById(customerData.id_);
+        console.log("verificar existencia", checkExistence)
+        if(checkExistence != null){
+          return this.CustomerController.fail("já existe cliente com esse ID");
+        }
+      }
       if(Customer instanceof InvalidParameterError){
         return this.CustomerController.fail("dados inválidos")
       }

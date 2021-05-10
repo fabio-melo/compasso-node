@@ -9,7 +9,7 @@ export class CustomerMap implements Mapper<Customer>{
   }
   static toPersistence(customer: Customer){
     return {
-        _id: customer._id, // null ou string 
+        id_: customer.id_.value.toString(), // null ou string 
         name: customer.name.value.toString(), 
         birthdate: customer.birthdate.value.toString(), 
         cityOfResidence: CityMap.toPersistence(customer.cityOfResidence.value), 

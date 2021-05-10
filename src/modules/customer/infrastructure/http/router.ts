@@ -20,9 +20,9 @@ function handle(useCaseClass: any){
 const customerRouter = express.Router();
 
 customerRouter.get("/find-by-name/", handle(FindCustomerByNameUseCase));
-customerRouter.get("/customer/:_id", handle(FindCustomerByIdUseCase));
-customerRouter.delete("/customer/:_id", handle(DeleteCustomerUseCase));
-customerRouter.put("/customer/:_id", handle(UpdateCustomerUseCase));
+customerRouter.get("/customer/:id_", handle(FindCustomerByIdUseCase));
+customerRouter.delete("/customer/:id_", handle(DeleteCustomerUseCase));
+customerRouter.put("/customer/:id_", handle(UpdateCustomerUseCase));
 customerRouter.post("/create", handle(CreateCustomerUseCase));
 
 
