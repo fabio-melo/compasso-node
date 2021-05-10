@@ -10,7 +10,9 @@
     "start": "tsc src/index.ts",
     "dev": "ts-node-dev -r tsconfig-paths/register --no-notify src/index.ts",
     "watch": "tsc --watch src/index.ts",
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc -p .",
+    "run-prod": "yarn build && pm2 start dist/src/index.js"
   },
   "devDependencies": {
     "@types/chai": "^4.2.18",

@@ -7,7 +7,7 @@ describe('Criar entidade Customer', () => {
   it('deve retornar uma nova entidade', async () => {
     
     const customerToAdd: ICustomer = {
-      _id: null,
+      id_: null,
       name: "Fábio Melo",
       birthdate: "1990-02-03",
       cityOfResidence: {
