@@ -5,8 +5,8 @@ import { FindCustomerByNameUseCase } from '../../application/use-cases/FindCusto
 import { DeleteCustomerUseCase } from '../../application/use-cases/DeleteCustomerUseCase';
 import { FindCustomerByIdUseCase } from '../../application/use-cases/FindCustomerByIdUseCase';
 import { UpdateCustomerUseCase } from '../../application/use-cases/UpdateCustomerNameUseCase';
+import { CreateCustomerUseCase } from '../../application/use-cases/CreateCustomerUseCase';
 
-const cityRouter = express.Router();
 
 function handle(useCaseClass: any){
   // forma DRY de criar a rota.
@@ -16,13 +16,14 @@ function handle(useCaseClass: any){
   })
 
 }
-cityRouter.get("/find-by-name/", handle(FindCustomerByNameUseCase));
-cityRouter.get("/customer/:_id", handle(FindCustomerByIdUseCase));
-cityRouter.delete("/customer/:_id", handle(DeleteCustomerUseCase));
-cityRouter.put("/customer/:_id", handle(UpdateCustomerUseCase));
 
-// customerRouter.use('/user', );
+const customerRouter = express.Router();
 
-// All routes go here 
+customerRouter.get("/find-by-name/", handle(FindCustomerByNameUseCase));
+customerRouter.get("/customer/:_id", handle(FindCustomerByIdUseCase));
+customerRouter.delete("/customer/:_id", handle(DeleteCustomerUseCase));
+customerRouter.put("/customer/:_id", handle(UpdateCustomerUseCase));
+customerRouter.post("/create", handle(CreateCustomerUseCase));
 
-export { cityRouter }
+
+export { customerRouter }
