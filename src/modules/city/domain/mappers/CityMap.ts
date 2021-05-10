@@ -9,8 +9,6 @@ export interface CityProps {
 
 export class CityMap implements Mapper<City>{
   static toEntity(raw: CityProps) {
-    let city = raw.name;
-    let state = raw.state;
 
     return City.create(raw);
   }
