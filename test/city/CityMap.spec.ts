@@ -1,6 +1,6 @@
+import { City } from "@/modules/city/domain/entities/City";
+import { CityMap } from "@/modules/city/domain/mappers/CityMap";
 import { expect } from "chai";
-import { City } from "../entities/City";
-import { CityMap } from "./CityMap";
 
 
 describe('Objeto serializável para City', () => {

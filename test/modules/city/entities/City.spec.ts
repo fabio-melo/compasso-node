@@ -1,7 +1,6 @@
+import { City } from "@/modules/city/domain/entities/City";
 import { InvalidParameterError } from "@/shared/errors/InvalidParameterError";
 import { expect } from "chai";
-import { City } from "./City"
-import { CityName } from "./CityName"
 
 describe('Criar entidade City', () => {
   it('deve retornar uma nova cidade criada', async () => {

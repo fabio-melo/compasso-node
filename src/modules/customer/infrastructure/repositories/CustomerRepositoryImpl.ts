@@ -10,20 +10,14 @@ export class CustomerRepositoryImpl implements CustomerRepository{
   constructor(database: DatabaseConnector){
     this.database = database;
   }
-
-  async checkIfCustomerAlreadyExists(name: string, state: string): Promise<boolean> {
-    await this.database.connect()
-    const CustomerQuery = { name, state}
-    const result = await (await this.database.collection("cities")).find(CustomerQuery).toArray()
-    console.log("result", result.length > 0)
-    // await this.database.close()
-    return (result.length > 0);
+  async customerCollection(){
+    return await this.database.collection("customers")
   }
 
   async saveCustomer(Customer: Customer): Promise<boolean>{
     await this.database.connect()
     let CustomerPersistence = CustomerMap.toPersistence(Customer);
-    const result =  await (await this.database.collection("cities")).insertOne(CustomerPersistence);
+    const result =  await (await this.customerCollection()).insertOne(CustomerPersistence);
     await this.database.close()
 
     if(result.insertedCount === 1){
@@ -35,26 +29,58 @@ export class CustomerRepositoryImpl implements CustomerRepository{
   }
   async findByName(name: string): Promise<any[]>{
 
-    console.log("name", name)
     const query = { name }
     await this.database.connect();
-    const result =  await (await this.database.collection("cities")).find(query)
+    const result =  await (await this.customerCollection()).find(query)
     const resultArray = await result.toArray();
-    console.log("aa", resultArray)
     
 
     return resultArray;
     
-    }
-  
-  async findByState(state: string): Promise<any[]>{
-
-    const query = { state }
-    await this.database.connect();
-    const result =  await (await this.database.collection("cities")).find(query).toArray();
-    await this.database.close()
-
-    return result;
   }
+
+  async findById(_id: string): Promise<any[]>{
+
+    const query = { _id }
+    await this.database.connect();
+    const result =  await (await this.customerCollection()).findOne(query)
+      
+  
+    return result;
+      
+    }
+
+  async deleteCustomer(_id: string): Promise<boolean>{
+
+    const query = { _id }
+    await this.database.connect();
+    const result =  await (await this.customerCollection()).deleteOne(query)
+    console.log("del", result)
+    if(result.ok == 1){
+      return true
+    }
+      
+  
+    return false;
+      
+    }
+
+  
+  async updateCustomerName(_id: string, name: string): Promise<boolean> {
+
+    const query = { _id }
+    const data = { name }
+    await this.database.connect();
+    const result =  await (await this.customerCollection()).updateOne(query, {$set: name})
+    console.log("del", result)
+    if(result.ok == 1){
+      return true
+    }
+      
+  
+    return false;
+        
+  }
+
 
 }

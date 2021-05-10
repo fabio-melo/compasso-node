@@ -19,11 +19,11 @@ function handle(useCaseClass: any){
 
 }
 
-console.log("router city")
+// console.log("router city")
 
-cityRouter.get("/find-by-name/", handle(FindCityByNameUseCase));
-cityRouter.get("/find-by-state/", handle(FindCityByStateUseCase));
-cityRouter.post("/create", handle(CreateCityUseCase));
+// cityRouter.get("/find-by-name/", handle(FindCityByNameUseCase));
+// cityRouter.get("/find-by-state/", handle(FindCityByStateUseCase));
+// cityRouter.post("/create", handle(CreateCityUseCase));
 
 // customerRouter.use('/user', );
 
