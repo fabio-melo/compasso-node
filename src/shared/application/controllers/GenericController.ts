@@ -34,8 +34,17 @@ export class GenericController {
     }
   }
 
-  public created () {
-    return this.res.sendStatus(201);
+  // public created () {
+  //   return this.res.sendStatus(201);
+  // }
+
+  public created<T> (dto?: T) {
+    if (!!dto) {
+      this.res.type('application/json');
+      return this.res.status(201).json(dto);
+    } else {
+      return this.res.sendStatus(201);
+    }
   }
 
   public clientError (message?: string) {

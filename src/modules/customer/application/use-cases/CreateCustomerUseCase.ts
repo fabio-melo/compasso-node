@@ -34,21 +34,22 @@ export class CreateCustomerUseCase implements UseCase{
     try {
       const customerData = this.CustomerController.getData() as CreateCustomerDTO;
 
-      const Customer = CustomerMap.toEntity(customerData);
+      const customer = CustomerMap.toEntity(customerData);
       if(customerData.id_ != null){
         const checkExistence = await this.CustomerRepo.findById(customerData.id_);
-        console.log("verificar existencia", checkExistence)
+
         if(checkExistence != null){
           return this.CustomerController.fail("já existe cliente com esse ID");
         }
       }
-      if(Customer instanceof InvalidParameterError){
+      if(customer instanceof InvalidParameterError){
         return this.CustomerController.fail("dados inválidos")
       }
+      const newCustomerData = CustomerMap.toPersistence(customer);
 
-      await this.CustomerRepo.saveCustomer(Customer);
+      await this.CustomerRepo.saveCustomer(customer);
 
-      return this.CustomerController.created();
+      return this.CustomerController.created(newCustomerData);
 
 
     } catch (err) {

@@ -28,7 +28,6 @@ export class UpdateCustomerUseCase implements UseCase{
       if(customer == null){
         return this.CustomerController.notFound("cliente não encontrado");
       }
-      // substitui
       customer.name = name;
       // verificar consistência
       if (CustomerMap.toEntity(customer) instanceof InvalidParameterError){

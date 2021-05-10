@@ -4,7 +4,7 @@ import { CustomerRepository } from "../../domain/repositories/CustomerRepository
 
 
 interface DeleteCustomerDTO {
-  _id: string,
+  id_: string,
 }
 
 export class DeleteCustomerUseCase implements UseCase{
@@ -23,11 +23,11 @@ export class DeleteCustomerUseCase implements UseCase{
   public async execute (): Promise<any> {
     
     try {
-      const {_id} = this.CustomerController.getParams() as unknown as DeleteCustomerDTO;
+      const {id_} = this.CustomerController.getParams() as unknown as DeleteCustomerDTO;
 
-      const result = await this.CustomerRepo.deleteCustomer(_id);
+      const result = await this.CustomerRepo.deleteCustomer(id_);
       if(result){
-        return this.CustomerController.ok("cliente deletado com sucess")
+        return this.CustomerController.ok()
       }
       return this.CustomerController.fail("cliente não existe ou já foi deletado")
       // testar se a cidade existe
