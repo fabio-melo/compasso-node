@@ -16,5 +16,17 @@ export class CustomerMap implements Mapper<Customer>{
         gender: customer.gender.value.toString()
       }
     }
+
+    static toPresentation(customer: Customer){
+      return {
+          id_: customer.id_.value.toString(), // null ou string 
+          name: customer.name.value.toString(), 
+          birthdate: customer.birthdate.value.toString(), 
+          cityOfResidence: CityMap.toPersistence(customer.cityOfResidence.value), 
+          gender: customer.gender.value.toString(),
+          age: customer.age
+        }
+      }
 }
+
     

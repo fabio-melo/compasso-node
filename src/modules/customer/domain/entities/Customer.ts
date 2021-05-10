@@ -5,6 +5,7 @@ import { CustomerGender } from "./CustomerGender";
 import { CustomerBirthDate } from "./CustomerBirthDate";
 import { CustomerCityOfResidence } from "./CustomerCityOfResidence";
 import { UniqueID } from "@/shared/models/domain/UniqueID";
+import { ageCalculator } from "@/shared/utils/ageCalculator";
 
 export interface ICustomer {
   id_: any, // null ou string 
@@ -70,6 +71,6 @@ export class Customer implements Entity<Customer> {
 
   get age() {
     // definir utils - return age.
-    return "22"
+    return ageCalculator(this.birthdate.value);
   }
 }

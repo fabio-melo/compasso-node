@@ -43,7 +43,7 @@ export class CustomerRepositoryImpl implements CustomerRepository{
 
     const query = { id_ }
     await this.database.connect();
-    const result =  await (await this.customerCollection()).findOne(query)
+    const result =  await (await this.customerCollection()).findOne(query,)
   
     return result;
       
