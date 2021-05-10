@@ -1,16 +1,13 @@
 import { GenericController } from "@/application/controllers/GenericController";
-import { InvalidParameterError } from "@/shared/errors/InvalidParameterError";
 import { UseCase } from "@/shared/models/domain/UseCase";
-import { CustomerMap } from "../../domain/mappers/CustomerMap";
 import { CustomerRepository } from "../../domain/repositories/CustomerRepository";
 
 
-interface CreateCustomerDTO {
-  name: string,
-  state: string,
+interface DeleteCustomerDTO {
+  _id: string,
 }
 
-export class CreateCustomerUseCase implements UseCase{
+export class DeleteCustomerUseCase implements UseCase{
   private CustomerRepo: CustomerRepository;
   private CustomerController: GenericController;
 
@@ -26,21 +23,14 @@ export class CreateCustomerUseCase implements UseCase{
   public async execute (): Promise<any> {
     
     try {
-      const CustomerData = this.CustomerController.getData() as CreateCustomerDTO;
+      const {_id} = this.CustomerController.getParams() as unknown as DeleteCustomerDTO;
 
-      const Customer = CustomerMap.toEntity(CustomerData);
-      if(Customer instanceof InvalidParameterError){
-        return this.CustomerController.fail("dados inválidos")
+      const result = await this.CustomerRepo.deleteCustomer(_id);
+      if(result){
+        return this.CustomerController.ok("cliente deletado com sucess")
       }
-
+      return this.CustomerController.fail("cliente não existe ou já foi deletado")
       // testar se a cidade existe
-      if(await this.CustomerRepo.checkIfCustomerAlreadyExists(CustomerData.name, CustomerData.state)){
-        return this.CustomerController.fail('cidade já está cadastrada');
-      }
-
-      await this.CustomerRepo.saveCustomer(Customer);
-
-      return this.CustomerController.created();
 
 
     } catch (err) {

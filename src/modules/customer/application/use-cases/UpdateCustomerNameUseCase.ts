@@ -4,13 +4,7 @@ import { UseCase } from "@/shared/models/domain/UseCase";
 import { CustomerMap } from "../../domain/mappers/CustomerMap";
 import { CustomerRepository } from "../../domain/repositories/CustomerRepository";
 
-
-interface CreateCustomerDTO {
-  name: string,
-  state: string,
-}
-
-export class CreateCustomerUseCase implements UseCase{
+export class UpdateCustomerUseCase implements UseCase{
   private CustomerRepo: CustomerRepository;
   private CustomerController: GenericController;
 
@@ -26,21 +20,27 @@ export class CreateCustomerUseCase implements UseCase{
   public async execute (): Promise<any> {
     
     try {
-      const CustomerData = this.CustomerController.getData() as CreateCustomerDTO;
+      const { name } = this.CustomerController.getData();
+      const { _id } = this.CustomerController.getParams();
 
-      const Customer = CustomerMap.toEntity(CustomerData);
-      if(Customer instanceof InvalidParameterError){
-        return this.CustomerController.fail("dados inválidos")
+      let customer = await this.CustomerRepo.findById(_id);
+      
+      if(customer == null){
+        return this.CustomerController.notFound("cliente não encontrado");
+      }
+      // substitui
+      customer.name = name;
+      // verificar consistência
+      if (CustomerMap.toEntity(customer) instanceof InvalidParameterError){
+        return this.CustomerController.fail('nome inválido');
       }
 
-      // testar se a cidade existe
-      if(await this.CustomerRepo.checkIfCustomerAlreadyExists(CustomerData.name, CustomerData.state)){
-        return this.CustomerController.fail('cidade já está cadastrada');
+      const results = await this.CustomerRepo.updateCustomerName(_id, name)
+
+      if(results){
+        return this.CustomerController.ok(customer);
       }
-
-      await this.CustomerRepo.saveCustomer(Customer);
-
-      return this.CustomerController.created();
+      return this.CustomerController.fail("erro no salvamento");
 
 
     } catch (err) {

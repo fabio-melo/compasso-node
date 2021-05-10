@@ -1,5 +1,6 @@
 import { GenericController } from "@/application/controllers/GenericController";
 import { UseCase } from "@/shared/models/domain/UseCase";
+import { CustomerMap } from "../../domain/mappers/CustomerMap";
 import { CustomerRepository } from "../../domain/repositories/CustomerRepository";
 
 
@@ -23,11 +24,11 @@ export class FindCustomerByNameUseCase implements UseCase{
   public async execute (): Promise<any> {
     
     try {
-      const CustomerData = this.CustomerController.getQuery() as unknown as FindCustomerByNameDTO;
-      console.log("params", CustomerData)
+      const {name} = this.CustomerController.getData() as unknown as FindCustomerByNameDTO;
       
-      const results = await this.CustomerRepo.findByName(CustomerData.name);
-      return this.CustomerController.ok(results);
+      let customer = await this.CustomerRepo.findByName(name);
+
+      return this.CustomerController.ok(customer);
 
     } catch (err) {
       console.log(err);

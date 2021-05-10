@@ -4,10 +4,10 @@ import { CustomerRepository } from "../../domain/repositories/CustomerRepository
 
 
 interface FindCustomerByStateDTO {
-  state: string,
+  _id: string,
 }
 
-export class FindCustomerByStateUseCase implements UseCase{
+export class FindCustomerByIdUseCase implements UseCase{
   private CustomerRepo: CustomerRepository;
   private CustomerController: GenericController;
 
@@ -23,10 +23,12 @@ export class FindCustomerByStateUseCase implements UseCase{
   public async execute (): Promise<any> {
     
     try {
-      const CustomerData = this.CustomerController.getQuery() as unknown as FindCustomerByStateDTO;
+      const { _id } = this.CustomerController.getParams() as unknown as FindCustomerByStateDTO;
 
-      const results = await this.CustomerRepo.findByState(CustomerData.state);
-            
+      const results = await this.CustomerRepo.findById(_id);
+      if(results == null){
+        return this.CustomerController.notFound("cliente não encontrado");
+      }
       return this.CustomerController.ok(results);
 
     } catch (err) {

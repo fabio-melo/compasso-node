@@ -39,7 +39,7 @@ export class CustomerRepositoryImpl implements CustomerRepository{
     
   }
 
-  async findById(_id: string): Promise<any[]>{
+  async findById(_id: string): Promise<any>{
 
     const query = { _id }
     await this.database.connect();

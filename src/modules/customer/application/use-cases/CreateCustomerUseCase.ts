@@ -6,8 +6,14 @@ import { CustomerRepository } from "../../domain/repositories/CustomerRepository
 
 
 interface CreateCustomerDTO {
-  name: string,
-  state: string,
+  _id: any, // null ou string 
+  name: string, 
+  birthdate: string, 
+  cityOfResidence: {
+    name: string,
+    state: string,
+  }, 
+  gender: string
 }
 
 export class CreateCustomerUseCase implements UseCase{
@@ -31,11 +37,6 @@ export class CreateCustomerUseCase implements UseCase{
       const Customer = CustomerMap.toEntity(CustomerData);
       if(Customer instanceof InvalidParameterError){
         return this.CustomerController.fail("dados inválidos")
-      }
-
-      // testar se a cidade existe
-      if(await this.CustomerRepo.checkIfCustomerAlreadyExists(CustomerData.name, CustomerData.state)){
-        return this.CustomerController.fail('cidade já está cadastrada');
       }
 
       await this.CustomerRepo.saveCustomer(Customer);

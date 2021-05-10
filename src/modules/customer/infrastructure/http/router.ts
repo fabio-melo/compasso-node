@@ -1,12 +1,10 @@
-import { GenericController } from '@/application/controllers/GenericController';
-import MongoConnector from '@/infrastructure/database';
 import express from 'express'
-import { FindCityByNameUseCase } from '../../application/use-cases/FindCustomerByNameUseCase';
 import { concreteUseCaseFactory } from '../container/concreteUseCaseFactory';
-import { CityRepositoryImpl } from '../repositories/CustomerRepositoryImpl';
 import asyncHandler from "express-async-handler"
-import { FindCityByStateUseCase } from '../../application/use-cases/FindCustomerByIdUseCase';
-import { CreateCityUseCase } from '../../application/use-cases/CreateCustomerUseCase';
+import { FindCustomerByNameUseCase } from '../../application/use-cases/FindCustomerByNameUseCase';
+import { DeleteCustomerUseCase } from '../../application/use-cases/DeleteCustomerUseCase';
+import { FindCustomerByIdUseCase } from '../../application/use-cases/FindCustomerByIdUseCase';
+import { UpdateCustomerUseCase } from '../../application/use-cases/UpdateCustomerNameUseCase';
 
 const cityRouter = express.Router();
 
@@ -18,12 +16,10 @@ function handle(useCaseClass: any){
   })
 
 }
-
-// console.log("router city")
-
-// cityRouter.get("/find-by-name/", handle(FindCityByNameUseCase));
-// cityRouter.get("/find-by-state/", handle(FindCityByStateUseCase));
-// cityRouter.post("/create", handle(CreateCityUseCase));
+cityRouter.get("/find-by-name/", handle(FindCustomerByNameUseCase));
+cityRouter.get("/customer/:_id", handle(FindCustomerByIdUseCase));
+cityRouter.delete("/customer/:_id", handle(DeleteCustomerUseCase));
+cityRouter.put("/customer/:_id", handle(UpdateCustomerUseCase));
 
 // customerRouter.use('/user', );
 
