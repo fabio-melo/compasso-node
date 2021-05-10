@@ -3,18 +3,18 @@ import { ValueObject } from "@/shared/models/domain/ValueObject";
 import { validateString } from "@/shared/validators/validateString";
 
 
-export class CityState extends ValueObject<string>{
+export class CustomerGender extends ValueObject<string>{
     
     private constructor (value: string){
         super(value);
         Object.freeze(this);
     }
 
-    static create (value: string): CityState | InvalidParameterError {
+    static create (value: string): CustomerGender | InvalidParameterError {
         if(!validateString(value)){
-            return new InvalidParameterError("state");
+            return new InvalidParameterError("CustomerGender");
         }
-        return new CityState(value);
+        return new CustomerGender(value);
     }
 
 }

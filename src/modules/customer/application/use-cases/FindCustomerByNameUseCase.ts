@@ -1,37 +1,37 @@
 import { GenericController } from "@/application/controllers/GenericController";
 import { UseCase } from "@/shared/models/domain/UseCase";
-import { CityRepository } from "../../domain/repositories/CustomerRepository";
+import { CustomerRepository } from "../../domain/repositories/CustomerRepository";
 
 
-interface FindCityByNameDTO {
+interface FindCustomerByNameDTO {
   name: string,
 }
 
-export class FindCityByNameUseCase implements UseCase{
-  private cityRepo: CityRepository;
-  private cityController: GenericController;
+export class FindCustomerByNameUseCase implements UseCase{
+  private CustomerRepo: CustomerRepository;
+  private CustomerController: GenericController;
 
   constructor (
-    cityRepo: CityRepository,
-    cityController: GenericController
+    CustomerRepo: CustomerRepository,
+    CustomerController: GenericController
   ) 
   {
-    this.cityController = cityController,
-    this.cityRepo = cityRepo
+    this.CustomerController = CustomerController,
+    this.CustomerRepo = CustomerRepo
   }
   
   public async execute (): Promise<any> {
     
     try {
-      const cityData = this.cityController.getQuery() as unknown as FindCityByNameDTO;
-      console.log("params", cityData)
+      const CustomerData = this.CustomerController.getQuery() as unknown as FindCustomerByNameDTO;
+      console.log("params", CustomerData)
       
-      const results = await this.cityRepo.findByName(cityData.name);
-      return this.cityController.ok(results);
+      const results = await this.CustomerRepo.findByName(CustomerData.name);
+      return this.CustomerController.ok(results);
 
     } catch (err) {
       console.log(err);
-      return this.cityController.fail("erro inesperado");
+      return this.CustomerController.fail("erro inesperado");
     }
   }
 }

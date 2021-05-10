@@ -1,51 +1,51 @@
 import { GenericController } from "@/application/controllers/GenericController";
 import { InvalidParameterError } from "@/shared/errors/InvalidParameterError";
 import { UseCase } from "@/shared/models/domain/UseCase";
-import { CityMap } from "../../domain/mappers/CustomerMap";
-import { CityRepository } from "../../domain/repositories/CustomerRepository";
+import { CustomerMap } from "../../domain/mappers/CustomerMap";
+import { CustomerRepository } from "../../domain/repositories/CustomerRepository";
 
 
-interface CreateCityDTO {
+interface CreateCustomerDTO {
   name: string,
   state: string,
 }
 
-export class CreateCityUseCase implements UseCase{
-  private cityRepo: CityRepository;
-  private cityController: GenericController;
+export class CreateCustomerUseCase implements UseCase{
+  private CustomerRepo: CustomerRepository;
+  private CustomerController: GenericController;
 
   constructor (
-    cityRepo: CityRepository,
-    cityController: GenericController
+    CustomerRepo: CustomerRepository,
+    CustomerController: GenericController
   ) 
   {
-    this.cityController = cityController,
-    this.cityRepo = cityRepo
+    this.CustomerController = CustomerController,
+    this.CustomerRepo = CustomerRepo
   }
   
   public async execute (): Promise<any> {
     
     try {
-      const cityData = this.cityController.getData() as CreateCityDTO;
+      const CustomerData = this.CustomerController.getData() as CreateCustomerDTO;
 
-      const city = CityMap.toEntity(cityData);
-      if(city instanceof InvalidParameterError){
-        return this.cityController.fail("dados inválidos")
+      const Customer = CustomerMap.toEntity(CustomerData);
+      if(Customer instanceof InvalidParameterError){
+        return this.CustomerController.fail("dados inválidos")
       }
 
       // testar se a cidade existe
-      if(await this.cityRepo.checkIfCityAlreadyExists(cityData.name, cityData.state)){
-        return this.cityController.fail('cidade já está cadastrada');
+      if(await this.CustomerRepo.checkIfCustomerAlreadyExists(CustomerData.name, CustomerData.state)){
+        return this.CustomerController.fail('cidade já está cadastrada');
       }
 
-      await this.cityRepo.saveCity(city);
+      await this.CustomerRepo.saveCustomer(Customer);
 
-      return this.cityController.created();
+      return this.CustomerController.created();
 
 
     } catch (err) {
       console.log(err)
-      return this.cityController.fail("erro inesperado");
+      return this.CustomerController.fail("erro inesperado");
     }
   }
 }
